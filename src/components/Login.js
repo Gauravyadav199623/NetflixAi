@@ -1,6 +1,10 @@
 import React, { useRef, useState } from 'react'
 import Header from "./Header"
 import {checkValidData} from '../Utils/validate'
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+
+import {auth} from '../Utils/firebase'
+
 
 const Login = () => {
   const [isSignInForm,setIsSignForm] = useState(true);
@@ -11,10 +15,49 @@ const Login = () => {
 
   const handelButtonClick = ()=>{
     //validate the form data
-    // console.log(email.current.value, password.current.value);
     const message = checkValidData(email.current.value, password.current.value)
     setErrorMessage(message);
-    console.log(message);
+
+    if(message) return 
+      //if there is message meaning there is some error. message is null ie no error
+    //crate  a new user ie signIn/signUp
+    if(!isSignInForm){
+      //signUp logic
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    console.log(user)
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+
+    console.log(errorCode +"-"+ errorMessage);
+    setErrorMessage(errorCode +"-"+ errorMessage)
+    // ..
+  });
+
+    }else{
+      // signIn logic
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode +'-'+ errorMessage);
+    setErrorMessage(errorCode +'-'+ errorMessage)
+  });
+
+    }
+    
+
   }
   const toggleSignInForm = ()=>{
     setIsSignForm(!isSignInForm)
@@ -33,15 +76,15 @@ const Login = () => {
       class='w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80'>
 
       <h1 className='font-bold text-3xl py-4'>
-        {isSignInForm? 'Sign In' : 'Sign Up'}</h1>
+        {isSignInForm? 'SIGN IN' : 'SIGN UP'}</h1>
+
+      {!isSignInForm && <input type='text' placeholder='Name' class='p-4 my-4 w-full bg-gray-700'/>}
+      {/* if not a sign in Form(ie isSignInForm is false) Then show the name input */}
 
         <input 
         ref={email}
         type='text' placeholder='Email Address' class='p-4 my-4 w-full bg-gray-700'
         />
-
-        {!isSignInForm && <input type='text' placeholder='Name' class='p-4 my-4 w-full bg-gray-700'/>}
-        {/* if not a sign in Form(ie isSignInForm is false) Then show the name input */}
         <input
         ref={password}
          type='password' placeholder='Password' class='p-4 my-4 w-full bg-gray-700'
