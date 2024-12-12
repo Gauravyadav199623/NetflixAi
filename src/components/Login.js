@@ -1,15 +1,22 @@
 import React, { useRef, useState } from 'react'
 import Header from "./Header"
 import {checkValidData} from '../Utils/validate'
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword,updateProfile } from "firebase/auth";
 
 import {auth} from '../Utils/firebase'
+import {useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../Utils/userSlice';
+
 
 
 const Login = () => {
   const [isSignInForm,setIsSignForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null)
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
+  const name = useRef(null)
   const email = useRef(null);
   const password = useRef(null);
 
@@ -24,36 +31,52 @@ const Login = () => {
     if(!isSignInForm){
       //signUp logic
       createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    console.log(user)
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
+      .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+       
+        updateProfile(user, {
+          displayName: name.current.value, 
+          photoURL:"https://th.bing.com/th/id/OIP.uDtPlCTKLnrQW_ipwKsCJAHaHa?w=170&h=180&c=7&r=0&o=5&dpr=1.4&pid=1.7"
+        }).then(() => {
 
-    console.log(errorCode +"-"+ errorMessage);
-    setErrorMessage(errorCode +"-"+ errorMessage)
-    // ..
-  });
+          const {uid, email, displayName, photoURL} = auth.currentUser;
+              dispatch(addUser({uid:uid, email:email, displayName:displayName, photoURL:photoURL})) 
+          navigate('/browse')
+
+        }).catch((error) => {
+          // An error occurred
+          setErrorMessage(error.message)
+          // ...
+        });
+        console.log(user)
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.log(errorCode +"-"+ errorMessage);
+        setErrorMessage(errorCode +"-"+ errorMessage)
+        // ..
+      });
 
     }else{
       // signIn logic
       signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log(user);
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode +'-'+ errorMessage);
-    setErrorMessage(errorCode +'-'+ errorMessage)
-  });
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(user);
+        navigate('/browse')
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode +'-'+ errorMessage);
+        setErrorMessage(errorCode +'-'+ errorMessage)
+      });
 
     }
     
