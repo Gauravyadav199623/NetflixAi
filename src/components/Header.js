@@ -12,11 +12,13 @@ const Header = () => {
 
 
   const handleSignOut = ()=>{
-    signOut(auth).then(() => {
+    signOut(auth)
+    .then(() => {
       // Sign-out successful.
       navigate('/')
 
-    }).catch((error) => {
+    })
+    .catch((error) => {
       // An error happened.
       navigate('/error')
     });

@@ -101,7 +101,9 @@ const Login = () => {
       <h1 className='font-bold text-3xl py-4'>
         {isSignInForm? 'SIGN IN' : 'SIGN UP'}</h1>
 
-      {!isSignInForm && <input type='text' placeholder='Name' class='p-4 my-4 w-full bg-gray-700'/>}
+      {!isSignInForm && <input 
+      ref={name}
+      type='text' placeholder='Name' class='p-4 my-4 w-full bg-gray-700'/>}
       {/* if not a sign in Form(ie isSignInForm is false) Then show the name input */}
 
         <input 

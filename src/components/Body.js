@@ -22,9 +22,12 @@ const Body = () => {
     ])
     useEffect(()=>{
         onAuthStateChanged(auth, (user) => {
+
             if (user) {
               // User is signed in
+              console.log(user, 'in header')
               const {uid, email, displayName, photoURL} = user;
+
               dispatch(addUser({uid:uid, email:email, displayName:displayName, photoURL:photoURL}))
 
             } else {
