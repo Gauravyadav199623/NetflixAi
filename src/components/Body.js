@@ -1,15 +1,10 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import Login from './Login'
 import Browse from './Browse'
 import { createBrowserRouter } from 'react-router-dom'
 import { RouterProvider } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import {onAuthStateChanged} from 'firebase/auth'
-import {auth} from '../Utils/firebase'
-import { addUser, removeUser } from '../Utils/userSlice'
 
 const Body = () => {
-    const dispatch = useDispatch()
     const appRouter = createBrowserRouter([
         {
             path: '/',
@@ -20,24 +15,7 @@ const Body = () => {
             element: <Browse />
         },
     ])
-    useEffect(()=>{
-        onAuthStateChanged(auth, (user) => {
-
-            if (user) {
-              // User is signed in
-              console.log(user, 'in header')
-              const {uid, email, displayName, photoURL} = user;
-
-              dispatch(addUser({uid:uid, email:email, displayName:displayName, photoURL:photoURL}))
-
-            } else {
-              // User is signed out
-              dispatch(removeUser());
-
-
-            }
-          });
-    },[])
+    // because Header is always present so i move the "onAuthStateChanged" in the header component
 
   return (
     <div>
