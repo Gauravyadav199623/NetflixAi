@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react'
 import Header from "./Header"
-import {checkValidData} from '../Utils/validate'
+import {checkValidData} from '../utils/validate'
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword,updateProfile } from "firebase/auth";
 
-import {auth} from '../Utils/firebase'
+import {auth} from '../utils/firebase'
 import { useDispatch } from 'react-redux';
-import { addUser } from '../Utils/userSlice';
-import { USER_AVATAR } from '../Utils/constants';
+import { addUser } from '../utils/userSlice';
+import { USER_AVATAR } from '../utils/constants';
 
 
 

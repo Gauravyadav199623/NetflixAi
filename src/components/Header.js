@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from 'react-redux';
-import {auth} from '../Utils/firebase';
+import {auth} from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
-import { addUser, removeUser } from '../Utils/userSlice';
-import { LOGO } from '../Utils/constants';
+import { addUser, removeUser } from '../utils/userSlice';
+import { LOGO } from '../utils/constants';
+
 
 
 
@@ -12,7 +13,6 @@ const Header = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const user = useSelector(store =>store.user)
-  console.log(user, "user in header");
 
 
   const handleSignOut = ()=>{
@@ -20,7 +20,6 @@ const Header = () => {
     .then(() => {
       // Sign-out successful.
       // "onAuthStateChanged" will take care of the sign out navigation also
-      console.log('Sign-out successful');
 
     })
     .catch((error) => {
@@ -35,7 +34,6 @@ const Header = () => {
       // ie  when our header component is unload it will unsubscribe this event
         if (user) {
           // User is signed in
-          console.log(user, 'in header')
           const {uid, email, displayName, photoURL} = user;
 
           dispatch(addUser({uid:uid, email:email, displayName:displayName, photoURL:photoURL})
