@@ -7,7 +7,8 @@ const MovieList = ({ title, movies }) => {
     return (
         <div className='px-6'>
             <h1 className='text-3xl text-white py-4'>{title}</h1>
-            <div className='flex overflow-x-scroll'>
+            <div   className='flex overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none]'
+            >
                 <div className='flex'>
                     {movies && movies.length > 0 ? ( // Check if movies exists and has data
                         movies.map((movie) => (
