@@ -6,7 +6,7 @@ import {createUserWithEmailAndPassword, signInWithEmailAndPassword,updateProfile
 import {auth} from '../utils/firebase'
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
-import { USER_AVATAR } from '../utils/constants';
+import { NETFLIX_BG, USER_AVATAR } from '../utils/constants';
 
 
 
@@ -55,7 +55,7 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        console.log(errorCode +"-"+ errorMessage);
+        // console.log(errorCode +"-"+ errorMessage);
         setErrorMessage(errorCode +"-"+ errorMessage)
         // ..
       });
@@ -72,7 +72,7 @@ const Login = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode +'-'+ errorMessage);
+        // console.log(errorCode +'-'+ errorMessage);
         setErrorMessage(errorCode +'-'+ errorMessage)
       });
 
@@ -89,7 +89,7 @@ const Login = () => {
       <div>
       <img 
       className='absolute'
-      src='https://assets.nflxext.com/ffe/siteui/vlv3/2bcf01ee-7ef6-4930-b0d5-c6863853c461/web/IN-en-20241125-TRIFECTA-perspective_a47db038-756f-4f26-b1f7-cfc882b98746_large.jpg'
+      src={NETFLIX_BG}
       alt='bg' />
       </div>
       <form 

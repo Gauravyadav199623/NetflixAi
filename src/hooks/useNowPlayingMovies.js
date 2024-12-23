@@ -11,7 +11,7 @@ import { useEffect } from "react";
   const getNowPlayingMovies = async()=>{
     const data =await fetch('https://api.themoviedb.org/3/movie/now_playing?page=1', API_OPTIONS);
     const json = await data.json()
-    console.log(json, 'Nowplaying');
+    // console.log(json, 'Nowplaying');
 
      //i will add this json.result in to my movieSlice using dispatch
     dispatch(addNowPlayingMovies(json.results))
