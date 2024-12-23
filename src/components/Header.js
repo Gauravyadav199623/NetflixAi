@@ -78,7 +78,7 @@ dispatch(changeLanguage(e.target.value))
             {showGptSearch && (
               <select className='p-2 m-2 bg-gray-800 text-white rounded-lg' 
               onChange={handleLanguageChange}
-              >
+               >
               {SUPPORTED_LANGUAGE.map(lang => <option kay={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
             </select>)}
             <button className='py-2 px-4 my-2 mx-4 bg-purple-700 text-white rounded-lg' 
