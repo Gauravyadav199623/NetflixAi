@@ -53,8 +53,8 @@ const SearchMovieTMDB = async(movie) =>{
 
   }
   return (
-    <div className='pt-[10%] flex justify-center'>
-        <form className='w-1/2 bg-black grid grid-cols-12' onSubmit={(e)=>e.preventDefault()}>
+    <div className='pt-[45%] md:pt-[10%] flex justify-center'>
+        <form className='w-full  md:w-1/2 bg-black grid grid-cols-12' onSubmit={(e)=>e.preventDefault()}>
             <input  
             ref={searchText}
             className="p-4 m-4 col-span-9" 
